@@ -25,22 +25,22 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>deviceurl：</label>
+			<li><label>deviceurl</label>
 				<form:input path="deviceurl" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
-			<li><label>仪表类型ID，关联到仪表类型表：</label>
+			<li><label>仪表类型ID</label>
 				<form:input path="datatypeid" htmlEscape="false" maxlength="11" class="input-medium"/>
 			</li>
-			<li><label>仪表通讯地址，一般为modbus地址（1-254有效）：</label>
+			<li><label>仪表通讯地址</label>
 				<form:input path="devicecommaddr" htmlEscape="false" maxlength="255" class="input-medium"/>
 			</li>
-			<li><label>位置：</label>
+			<li><label>位置</label>
 				<form:input path="location" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
-			<li><label>描述：</label>
+			<li><label>描述</label>
 				<form:input path="desc" htmlEscape="false" maxlength="200" class="input-medium"/>
 			</li>
-			<li><label>数据采集器通道编号，从1开始：</label>
+			<li><label>数据采集器通道编号：</label>
 				<form:input path="dcchannelsn" htmlEscape="false" maxlength="11" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -106,8 +106,8 @@
 					${meter.remarks}
 				</td>
 				<shiro:hasPermission name="eospd:meter:meter:edit"><td>
-    				<a href="${ctx}/eospd/meter/meter/form?id=${meter.id}">修改</a>
-					<a href="${ctx}/eospd/meter/meter/delete?id=${meter.id}" onclick="return confirmx('确认要删除该仪表信息吗？', this.href)">删除</a>
+    				<a href="${ctx}/eospd/meter/meter/form?id=${meter.deviceid}">修改</a>
+					<a href="${ctx}/eospd/meter/meter/delete?id=${meter.deviceid}" onclick="return confirmx('确认要删除该仪表信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

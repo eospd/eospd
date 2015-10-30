@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.eospd.dao.meter_vender.MetervenderDao">
+    
+	<sql id="metervenderColumns">
+		a.venderid AS "venderid",
+		a.vendername AS "vendername",
+		a.venderaddr AS "venderaddr",
+		a.contactphone AS "contactphone",
+		a.contactperson AS "contactperson",
+		a.inserttime AS "inserttime",
+		a.updatetime AS "updatetime",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="metervenderJoins">
+	</sql>
+    
+	<select id="get" resultType="Metervender">
+		SELECT 
+			<include refid="metervenderColumns"/>
+		FROM metervender a
+		<include refid="metervenderJoins"/>
+		WHERE a.venderid = #{id}
+	</select>
+	
+	<select id="findList" resultType="Metervender">
+		SELECT 
+			<include refid="metervenderColumns"/>
+		FROM metervender a
+		<include refid="metervenderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="vendername != null and vendername != ''">
+				AND a.vendername = #{vendername}
+			</if>
+			<if test="venderaddr != null and venderaddr != ''">
+				AND a.venderaddr = #{venderaddr}
+			</if>
+			<if test="contactphone != null and contactphone != ''">
+				AND a.contactphone = #{contactphone}
+			</if>
+			<if test="contactperson != null and contactperson != ''">
+				AND a.contactperson = #{contactperson}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Metervender">
+		SELECT 
+			<include refid="metervenderColumns"/>
+		FROM metervender a
+		<include refid="metervenderJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO metervender(
+			vendername,
+			venderaddr,
+			contactphone,
+			contactperson,
+			inserttime,
+			updatetime,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks
+		) VALUES (
+			#{vendername},
+			#{venderaddr},
+			#{contactphone},
+			#{contactperson},
+			#{inserttime},
+			#{updatetime},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE metervender SET 	
+			vendername = #{vendername},
+			venderaddr = #{venderaddr},
+			contactphone = #{contactphone},
+			contactperson = #{contactperson},
+			inserttime = #{inserttime},
+			updatetime = #{updatetime},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE venderid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE metervender SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE venderid = #{id}
+	</update>
+	
+</mapper>
