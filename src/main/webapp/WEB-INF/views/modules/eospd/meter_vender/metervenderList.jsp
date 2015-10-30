@@ -58,7 +58,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="metervender">
 			<tr>
-				<td><a href="${ctx}/eospd/meter_vender/metervender/form?id=${metervender.id}">
+				<td><a href="${ctx}/eospd/meter_vender/metervender/form?id=${metervender.venderid}">
 					${metervender.vendername}
 				</a></td>
 				<td>

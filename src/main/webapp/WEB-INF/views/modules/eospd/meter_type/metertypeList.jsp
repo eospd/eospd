@@ -48,7 +48,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="metertype">
 			<tr>
-				<td><a href="${ctx}/eospd/meter_type/metertype/form?id=${metertype.id}">
+				<td><a href="${ctx}/eospd/meter_type/metertype/form?id=${metertype.datatypeid}">
 					${metertype.typeurl}
 				</a></td>
 				<td>

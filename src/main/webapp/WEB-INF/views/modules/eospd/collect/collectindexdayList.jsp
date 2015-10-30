@@ -25,21 +25,21 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>采集指标时间，年月日有效：</label>
+			<li><label>采集指标时间</label>
 				<input name="indextime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${collectindexday.indextime}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
 			</li>
-			<li><label>仪表ID，=0指系统采集指标；&gt;0指某仪表采集指标 meter表的deviceId列：</label>
+			<li><label>仪表ID</label>
 				<form:input path="deviceid" htmlEscape="false" maxlength="11" class="input-medium"/>
 			</li>
-			<li><label>数据有效率：</label>
+			<li><label>数据有效率</label>
 				<form:input path="dataeffrate" htmlEscape="false" class="input-medium"/>
 			</li>
-			<li><label>仪表在线率：</label>
+			<li><label>仪表在线率</label>
 				<form:input path="meteronlinerate" htmlEscape="false" class="input-medium"/>
 			</li>
-			<li><label>realcollectrate：</label>
+			<li><label>realcollectrate</label>
 				<form:input path="realcollectrate" htmlEscape="false" class="input-medium"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
@@ -66,7 +66,7 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="collectindexday">
 			<tr>
-				<td><a href="${ctx}/eospd/collect/collectindexday/form?id=${collectindexday.id}">
+				<td><a href="${ctx}/eospd/collect/collectindexday/form?id=${collectindexday.indexid}">
 					<fmt:formatDate value="${collectindexday.indextime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</a></td>
 				<td>

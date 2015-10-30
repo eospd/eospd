@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.eospd.dao.circuitinfo.CircuitinfoDao">
+    
+	<sql id="circuitinfoColumns">
+		a.circuitid AS "circuitid",
+		a.circuiturl AS "circuiturl",
+		a.circuitname AS "circuitname",
+		a.location AS "location",
+		a.switchratedc AS "switchratedc",
+		a.levelv AS "levelv",
+		a.designpower AS "designpower",
+		a.powerphase AS "powerphase",
+		a.parentid AS "parentid",
+		a.dynamicparent1id AS "dynamicparent1id",
+		a.dynamicparent2id AS "dynamicparent2id",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="circuitinfoJoins">
+	</sql>
+    
+	<select id="get" resultType="Circuitinfo">
+		SELECT 
+			<include refid="circuitinfoColumns"/>
+		FROM circuitinfo a
+		<include refid="circuitinfoJoins"/>
+		WHERE a.circuitid = #{id}
+	</select>
+	
+	<select id="findList" resultType="Circuitinfo">
+		SELECT 
+			<include refid="circuitinfoColumns"/>
+		FROM circuitinfo a
+		<include refid="circuitinfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="circuiturl != null and circuiturl != ''">
+				AND a.circuiturl = #{circuiturl}
+			</if>
+			<if test="circuitname != null and circuitname != ''">
+				AND a.circuitname = #{circuitname}
+			</if>
+			<if test="location != null and location != ''">
+				AND a.location = #{location}
+			</if>
+			<if test="switchratedc != null and switchratedc != ''">
+				AND a.switchratedc = #{switchratedc}
+			</if>
+			<if test="levelv != null and levelv != ''">
+				AND a.levelv = #{levelv}
+			</if>
+			<if test="designpower != null and designpower != ''">
+				AND a.designpower = #{designpower}
+			</if>
+			<if test="powerphase != null and powerphase != ''">
+				AND a.powerphase = #{powerphase}
+			</if>
+			<if test="parentid != null and parentid != ''">
+				AND a.parentid = #{parentid}
+			</if>
+			<if test="dynamicparent1id != null and dynamicparent1id != ''">
+				AND a.dynamicparent1id = #{dynamicparent1id}
+			</if>
+			<if test="dynamicparent2id != null and dynamicparent2id != ''">
+				AND a.dynamicparent2id = #{dynamicparent2id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Circuitinfo">
+		SELECT 
+			<include refid="circuitinfoColumns"/>
+		FROM circuitinfo a
+		<include refid="circuitinfoJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO circuitinfo(
+			circuiturl,
+			circuitname,
+			location,
+			switchratedc,
+			levelv,
+			designpower,
+			powerphase,
+			parentid,
+			dynamicparent1id,
+			dynamicparent2id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{circuiturl},
+			#{circuitname},
+			#{location},
+			#{switchratedc},
+			#{levelv},
+			#{designpower},
+			#{powerphase},
+			#{parentid},
+			#{dynamicparent1id},
+			#{dynamicparent2id},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE circuitinfo SET 	
+			circuiturl = #{circuiturl},
+			circuitname = #{circuitname},
+			location = #{location},
+			switchratedc = #{switchratedc},
+			levelv = #{levelv},
+			designpower = #{designpower},
+			powerphase = #{powerphase},
+			parentid = #{parentid},
+			dynamicparent1id = #{dynamicparent1id},
+			dynamicparent2id = #{dynamicparent2id},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE circuitid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE circuitinfo SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE circuitid = #{id}
+	</update>
+	
+</mapper>

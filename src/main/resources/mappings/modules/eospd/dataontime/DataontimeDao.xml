@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.eospd.dao.dataontime.DataontimeDao">
+    
+	<sql id="dataontimeColumns">
+		a.doid AS "doid",
+		a.datalayer AS "datalayer",
+		a.dcid AS "dcid",
+		a.currenttime AS "currenttime",
+		a.recetime AS "recetime",
+		a.timeinterval AS "timeinterval",
+		a.bpsign AS "bpsign",
+		a.dataid AS "dataid",
+		a.datatypeid AS "datatypeid",
+		a.ivsign AS "ivsign",
+		a.p1pv AS "p1pv",
+		a.p1err AS "p1err",
+		a.p1dv AS "p1dv",
+		a.p1rsz AS "p1rsz",
+		a.inserttime AS "inserttime",
+		a.updatetime AS "updatetime",
+		a.p2pv AS "p2pv",
+		a.p2err AS "p2err",
+		a.p2dv AS "p2dv",
+		a.p2rsz AS "p2rsz",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="dataontimeJoins">
+	</sql>
+    
+	<select id="get" resultType="Dataontime">
+		SELECT 
+			<include refid="dataontimeColumns"/>
+		FROM dataontime a
+		<include refid="dataontimeJoins"/>
+		WHERE a.doid = #{id}
+	</select>
+	
+	<select id="findList" resultType="Dataontime">
+		SELECT 
+			<include refid="dataontimeColumns"/>
+		FROM dataontime a
+		<include refid="dataontimeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="datalayer != null and datalayer != ''">
+				AND a.datalayer = #{datalayer}
+			</if>
+			<if test="dcid != null and dcid != ''">
+				AND a.dcid = #{dcid}
+			</if>
+			<if test="currenttime != null and currenttime != ''">
+				AND a.currenttime = #{currenttime}
+			</if>
+			<if test="recetime != null and recetime != ''">
+				AND a.recetime = #{recetime}
+			</if>
+			<if test="timeinterval != null and timeinterval != ''">
+				AND a.timeinterval = #{timeinterval}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Dataontime">
+		SELECT 
+			<include refid="dataontimeColumns"/>
+		FROM dataontime a
+		<include refid="dataontimeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO dataontime(
+			datalayer,
+			dcid,
+			currenttime,
+			recetime,
+			timeinterval,
+			bpsign,
+			dataid,
+			datatypeid,
+			ivsign,
+			p1pv,
+			p1err,
+			p1dv,
+			p1rsz,
+			inserttime,
+			updatetime,
+			p2pv,
+			p2err,
+			p2dv,
+			p2rsz,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{datalayer},
+			#{dcid},
+			#{currenttime},
+			#{recetime},
+			#{timeinterval},
+			#{bpsign},
+			#{dataid},
+			#{datatypeid},
+			#{ivsign},
+			#{p1pv},
+			#{p1err},
+			#{p1dv},
+			#{p1rsz},
+			#{inserttime},
+			#{updatetime},
+			#{p2pv},
+			#{p2err},
+			#{p2dv},
+			#{p2rsz},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE dataontime SET 	
+			datalayer = #{datalayer},
+			dcid = #{dcid},
+			currenttime = #{currenttime},
+			recetime = #{recetime},
+			timeinterval = #{timeinterval},
+			bpsign = #{bpsign},
+			dataid = #{dataid},
+			datatypeid = #{datatypeid},
+			ivsign = #{ivsign},
+			p1pv = #{p1pv},
+			p1err = #{p1err},
+			p1dv = #{p1dv},
+			p1rsz = #{p1rsz},
+			inserttime = #{inserttime},
+			updatetime = #{updatetime},
+			p2pv = #{p2pv},
+			p2err = #{p2err},
+			p2dv = #{p2dv},
+			p2rsz = #{p2rsz},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE doid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE dataontime SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE doid = #{id}
+	</update>
+	
+</mapper>
