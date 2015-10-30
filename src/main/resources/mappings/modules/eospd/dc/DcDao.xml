@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.eospd.dao.dc.DcDao">
+    
+	<sql id="dcColumns">
+		a.dcid AS "dcid",
+		a.dcurl AS "dcurl",
+		a.location AS "location",
+		a.`desc` AS "desc",
+		a.channelcount AS "channelcount",
+		a.dcip AS "dcip",
+		a.autosign AS "autosign",
+		a.installtime AS "installtime",
+		a.inserttime AS "inserttime",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="dcJoins">
+	</sql>
+    
+	<select id="get" resultType="Dc">
+		SELECT 
+			<include refid="dcColumns"/>
+		FROM dc a
+		<include refid="dcJoins"/>
+		WHERE a.dcid = #{id}
+	</select>
+	
+	<select id="findList" resultType="Dc">
+		SELECT 
+			<include refid="dcColumns"/>
+		FROM dc a
+		<include refid="dcJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="dcurl != null and dcurl != ''">
+				AND a.dcurl = #{dcurl}
+			</if>
+			<if test="location != null and location != ''">
+				AND a.location = #{location}
+			</if>
+			<if test="desc != null and desc != ''">
+				AND a.desc = #{desc}
+			</if>
+			<if test="channelcount != null and channelcount != ''">
+				AND a.channelcount = #{channelcount}
+			</if>
+			<if test="dcip != null and dcip != ''">
+				AND a.dcip = #{dcip}
+			</if>
+			<if test="autosign != null and autosign != ''">
+				AND a.autosign = #{autosign}
+			</if>
+			<if test="installtime != null and installtime != ''">
+				AND a.installtime = #{installtime}
+			</if>
+			<if test="inserttime != null and inserttime != ''">
+				AND a.inserttime = #{inserttime}
+			</if>
+			<if test="createBy != null and createBy.id != null and createBy.id != ''">
+				AND a.create_by = #{createBy.id}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Dc">
+		SELECT 
+			<include refid="dcColumns"/>
+		FROM dc a
+		<include refid="dcJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO dc(
+			dcurl,
+			location,
+			`desc`,
+			channelcount,
+			dcip,
+			autosign,
+			installtime,
+			inserttime,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{dcurl},
+			#{location},
+			#{desc},
+			#{channelcount},
+			#{dcip},
+			#{autosign},
+			#{installtime},
+			#{inserttime},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE dc SET 	
+			dcurl = #{dcurl},
+			location = #{location},
+			`desc` = #{desc},
+			channelcount = #{channelcount},
+			dcip = #{dcip},
+			autosign = #{autosign},
+			installtime = #{installtime},
+			inserttime = #{inserttime},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE dcid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE dc SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE dcid = #{id}
+	</update>
+	
+</mapper>

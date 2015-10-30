@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.eospd.dao.devonline.DevonlineDao">
+    
+	<sql id="devonlineColumns">
+		a.devolid AS "devolid",
+		a.dcid AS "dcid",
+		a.devicetype AS "devicetype",
+		a.deviceid AS "deviceid",
+		a.currenttime AS "currenttime",
+		a.devicestatus AS "devicestatus",
+		a.bpsign AS "bpsign",
+		a.inserttime AS "inserttime",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="devonlineJoins">
+	</sql>
+    
+	<select id="get" resultType="Devonline">
+		SELECT 
+			<include refid="devonlineColumns"/>
+		FROM devonline a
+		<include refid="devonlineJoins"/>
+		WHERE a.devolid = #{id}
+	</select>
+	
+	<select id="findList" resultType="Devonline">
+		SELECT 
+			<include refid="devonlineColumns"/>
+		FROM devonline a
+		<include refid="devonlineJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="dcid != null and dcid != ''">
+				AND a.dcid = #{dcid}
+			</if>
+			<if test="devicetype != null and devicetype != ''">
+				AND a.devicetype = #{devicetype}
+			</if>
+			<if test="deviceid != null and deviceid != ''">
+				AND a.deviceid = #{deviceid}
+			</if>
+			<if test="currenttime != null and currenttime != ''">
+				AND a.currenttime = #{currenttime}
+			</if>
+			<if test="devicestatus != null and devicestatus != ''">
+				AND a.devicestatus = #{devicestatus}
+			</if>
+			<if test="bpsign != null and bpsign != ''">
+				AND a.bpsign = #{bpsign}
+			</if>
+			<if test="inserttime != null and inserttime != ''">
+				AND a.inserttime = #{inserttime}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Devonline">
+		SELECT 
+			<include refid="devonlineColumns"/>
+		FROM devonline a
+		<include refid="devonlineJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO devonline(
+			dcid,
+			devicetype,
+			deviceid,
+			currenttime,
+			devicestatus,
+			bpsign,
+			inserttime,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{dcid},
+			#{devicetype},
+			#{deviceid},
+			#{currenttime},
+			#{devicestatus},
+			#{bpsign},
+			#{inserttime},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE devonline SET 	
+			dcid = #{dcid},
+			devicetype = #{devicetype},
+			deviceid = #{deviceid},
+			currenttime = #{currenttime},
+			devicestatus = #{devicestatus},
+			bpsign = #{bpsign},
+			inserttime = #{inserttime},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE devolid = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE devonline SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE devolid = #{id}
+	</update>
+	
+</mapper>
