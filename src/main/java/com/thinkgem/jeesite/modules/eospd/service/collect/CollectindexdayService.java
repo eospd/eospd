@@ -16,7 +16,7 @@ import com.thinkgem.jeesite.modules.eospd.dao.collect.CollectindexdayDao;
 /**
  * 数据采集指标Service
  * @author denofiend
- * @version 2015-10-29
+ * @version 2015-10-30
  */
 @Service
 @Transactional(readOnly = true)

@@ -8,7 +8,13 @@
 		a.deviceid AS "deviceid",
 		a.dataeffrate AS "dataeffrate",
 		a.meteronlinerate AS "meteronlinerate",
-		a.realcollectrate AS "realcollectrate"
+		a.realcollectrate AS "realcollectrate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
 	</sql>
 	
 	<sql id="collectindexdayJoins">
@@ -19,7 +25,7 @@
 			<include refid="collectindexdayColumns"/>
 		FROM collectindexday a
 		<include refid="collectindexdayJoins"/>
-		WHERE a.id = #{id}
+		WHERE a.indexid = #{id}
 	</select>
 	
 	<select id="findList" resultType="Collectindexday">
@@ -28,13 +34,29 @@
 		FROM collectindexday a
 		<include refid="collectindexdayJoins"/>
 		<where>
-			
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="indextime != null and indextime != ''">
+				AND a.indextime = #{indextime}
+			</if>
+			<if test="deviceid != null and deviceid != ''">
+				AND a.deviceid = #{deviceid}
+			</if>
+			<if test="dataeffrate != null and dataeffrate != ''">
+				AND a.dataeffrate = #{dataeffrate}
+			</if>
+			<if test="meteronlinerate != null and meteronlinerate != ''">
+				AND a.meteronlinerate = #{meteronlinerate}
+			</if>
+			<if test="realcollectrate != null and realcollectrate != ''">
+				AND a.realcollectrate = #{realcollectrate}
+			</if>
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
@@ -45,49 +67,63 @@
 		FROM collectindexday a
 		<include refid="collectindexdayJoins"/>
 		<where>
-			
+			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
+				ORDER BY a.update_date DESC
 			</otherwise>
 		</choose>
 	</select>
 	
 	<insert id="insert">
 		INSERT INTO collectindexday(
-			indexid,
 			indextime,
 			deviceid,
 			dataeffrate,
 			meteronlinerate,
-			realcollectrate
+			realcollectrate,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
 		) VALUES (
-			#{indexid},
 			#{indextime},
 			#{deviceid},
 			#{dataeffrate},
 			#{meteronlinerate},
-			#{realcollectrate}
+			#{realcollectrate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
 		)
 	</insert>
 	
 	<update id="update">
 		UPDATE collectindexday SET 	
-			indexid = #{indexid},
 			indextime = #{indextime},
 			deviceid = #{deviceid},
 			dataeffrate = #{dataeffrate},
 			meteronlinerate = #{meteronlinerate},
-			realcollectrate = #{realcollectrate}
-		WHERE id = #{id}
+			realcollectrate = #{realcollectrate},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE indexid = #{id}
 	</update>
 	
 	<update id="delete">
-		DELETE FROM collectindexday
-		WHERE id = #{id}
+		UPDATE collectindexday SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE indexid = #{id}
 	</update>
 	
 </mapper>

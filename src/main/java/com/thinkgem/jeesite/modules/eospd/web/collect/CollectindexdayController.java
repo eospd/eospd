@@ -25,7 +25,7 @@ import com.thinkgem.jeesite.modules.eospd.service.collect.CollectindexdayService
 /**
  * 数据采集指标Controller
  * @author denofiend
- * @version 2015-10-29
+ * @version 2015-10-30
  */
 @Controller
 @RequestMapping(value = "${adminPath}/eospd/collect/collectindexday")

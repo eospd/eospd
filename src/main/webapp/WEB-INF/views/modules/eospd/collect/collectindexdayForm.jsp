@@ -34,13 +34,6 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
-			<label class="control-label">自增长ID：</label>
-			<div class="controls">
-				<form:input path="indexid" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">采集指标时间，年月日有效：</label>
 			<div class="controls">
 				<input name="indextime" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate "
@@ -70,6 +63,12 @@
 			<label class="control-label">realcollectrate：</label>
 			<div class="controls">
 				<form:input path="realcollectrate" htmlEscape="false" class="input-xlarge "/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">备注信息：</label>
+			<div class="controls">
+				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="255" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

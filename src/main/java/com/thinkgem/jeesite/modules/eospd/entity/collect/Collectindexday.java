@@ -12,7 +12,7 @@ import com.thinkgem.jeesite.common.persistence.DataEntity;
 /**
  * 数据采集指标Entity
  * @author denofiend
- * @version 2015-10-29
+ * @version 2015-10-30
  */
 public class Collectindexday extends DataEntity<Collectindexday> {
 	
